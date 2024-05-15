@@ -1,6 +1,6 @@
 const core = require('@actions/core'); const exec = require("@actions/exec");
 const process = require('node:process');
-
+const stream = require('node:stream')
 
 async function main() {
   try {
@@ -34,15 +34,11 @@ async function validateTarget(target) {
     throw new Error(`Cross compilation is only supported for Linux targets and hosts.`);
   }
 
-  let targetsStr = ""
+  let stream = new StringWriter()
   await exec.exec('rustc', ['--print', 'target-list'], {
-    listeners: {
-      stdout: (data) => {
-        targetsStr += data.toString();
-      }
-    }
+    outStream: stream,
   });
-  let targets = new Set(targetsStr.split('\n'));
+  let targets = new Set(stream.getData().split('\n'));
 
   if (!targets.has(target)) {
     throw new Error(`Not a rust target: ${target}`);
@@ -55,9 +51,8 @@ async function validateTarget(target) {
 }
 
 function getGccName({ arch, other }) {
-  let gccArch = '';
   let gnusuffix = other.replace("musl", "gnu")
-  return `gcc-${gccArch}-linux-${gnuSuffix}`;
+  return `gcc-${arch}-linux-${gnuSuffix}`;
 }
 
 function getDebianArch({ arch, other }) {
@@ -83,4 +78,31 @@ function getDebianArch({ arch, other }) {
   let PACKAGE_ARCH = archMap[arch];
   let ARCH_SUFFIX = archSuffix[other];
   return `${PACKAGE_ARCH}${ARCH_SUFFIX}`;
+}
+
+// A writeable stream that writes to a string
+class StringWritable {
+  constructor() {
+    this.content = '';
+  }
+
+  write(data) {
+    this.content += data.toString();
+  }
+}
+
+class StringWriter extends Writable {
+  constructor(options) {
+    super(options);
+    this.data = '';
+  }
+
+  _write(chunk, encoding, callback) {
+    this.data += chunk.toString();
+    callback();
+  }
+
+  getData() {
+    return this.data;
+  }
 }
