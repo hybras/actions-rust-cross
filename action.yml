@@ -5,6 +5,13 @@ inputs:
   rust_target:
     description: 'The target triple for the cross compilation'
     required: true
+outputs:
+  linker:
+    description: 'The linker for the target triple'
+    value: ${{ steps.main.outputs.linker }}
+  package_arch:
+    description: 'The debian name for the architecture'
+    value: ${{ steps.main.outputs.package_arch }}
 
 runs:
   using: "composite"
@@ -15,5 +22,6 @@ runs:
         exit 1
       shell: bash
     - name: Install cross compilation prerequisites
+      id: main
       shell: bash
       run: ./index.sh ${{ inputs.rust_target }}
