@@ -28063,13 +28063,13 @@ var __webpack_exports__ = {};
 (() => {
 const core = __nccwpck_require__(2186); const exec = __nccwpck_require__(1514);
 const process = __nccwpck_require__(7742);
-
+const stream = __nccwpck_require__(4492)
 
 async function main() {
   try {
     checkLinux();
     const target = core.getInput('rust_target');
-    const target_props = validateTarget(target);
+    const target_props = await validateTarget(target);
     let arch = getDebianArch(target_props);
     await installDebArch(arch);
     let gccName = getGccName(target_props);
@@ -28097,15 +28097,11 @@ async function validateTarget(target) {
     throw new Error(`Cross compilation is only supported for Linux targets and hosts.`);
   }
 
-  let targetsStr = ""
+  let stream = new StringWriter()
   await exec.exec('rustc', ['--print', 'target-list'], {
-    listeners: {
-      stdout: (data) => {
-        targetsStr += data.toString();
-      }
-    }
+    outStream: stream,
   });
-  let targets = new Set(targetsStr.split('\n'));
+  let targets = new Set(stream.getData().split('\n'));
 
   if (!targets.has(target)) {
     throw new Error(`Not a rust target: ${target}`);
@@ -28118,9 +28114,8 @@ async function validateTarget(target) {
 }
 
 function getGccName({ arch, other }) {
-  let gccArch = '';
   let gnusuffix = other.replace("musl", "gnu")
-  return `gcc-${gccArch}-linux-${gnuSuffix}`;
+  return `gcc-${arch}-linux-${gnuSuffix}`;
 }
 
 function getDebianArch({ arch, other }) {
@@ -28148,6 +28143,32 @@ function getDebianArch({ arch, other }) {
   return `${PACKAGE_ARCH}${ARCH_SUFFIX}`;
 }
 
+// A writeable stream that writes to a string
+class StringWritable {
+  constructor() {
+    this.content = '';
+  }
+
+  write(data) {
+    this.content += data.toString();
+  }
+}
+
+class StringWriter extends Writable {
+  constructor(options) {
+    super(options);
+    this.data = '';
+  }
+
+  _write(chunk, encoding, callback) {
+    this.data += chunk.toString();
+    callback();
+  }
+
+  getData() {
+    return this.data;
+  }
+}
 })();
 
 module.exports = __webpack_exports__;

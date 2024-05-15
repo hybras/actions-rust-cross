@@ -6,7 +6,7 @@ async function main() {
   try {
     checkLinux();
     const target = core.getInput('rust_target');
-    const target_props = validateTarget(target);
+    const target_props = await validateTarget(target);
     let arch = getDebianArch(target_props);
     await installDebArch(arch);
     let gccName = getGccName(target_props);
