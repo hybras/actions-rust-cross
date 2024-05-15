@@ -11,7 +11,7 @@ on:
 
 jobs:
   test:
-    name: ${{ matrix.job.target }}
+    name: ${{ matrix.target }}
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: test_fixture } }
     strategy:
