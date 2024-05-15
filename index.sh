@@ -36,7 +36,7 @@ case $ARCH in
     ;;
     x86_64)
     PACKAGE_ARCH="amd64"
-    LINKER=gcc-x86_64-linux-gnu
+    LINKER=gcc-x86-64-linux-gnu
     ;;
     i686)
     PACKAGE_ARCH="i386"
