@@ -18,11 +18,11 @@ case $ARCH in
     case $OTHER in
         gnueabihf | musleabihf)
         PACKAGE_ARCH="armhf"
-        LINKER=gcc-arm-linux-gnueabihf
+        LINKER=arm-linux-gnueabihf-gcc
         ;;
         gnueabi | musleabi)
         PACKAGE_ARCH="armel"
-        LINKER=gcc-arm-linux-gnueabi
+        LINKER=arm-linux-gnueabi-gcc
         ;;
         *)
         echo "Unsupported architecture: $ARCH-$OTHER"
@@ -32,15 +32,15 @@ case $ARCH in
     ;;
     aarch64)
     PACKAGE_ARCH="arm64"
-    LINKER=gcc-aarch64-linux-gnu
+    LINKER=aarch64-linux-gnu-gcc
     ;;
     x86_64)
     PACKAGE_ARCH="amd64"
-    LINKER=gcc-x86-64-linux-gnu
+    LINKER=x86-64-linux-gnu-gcc
     ;;
     i686)
     PACKAGE_ARCH="i386"
-    LINKER=gcc-i686-linux-gnu
+    LINKER=i686-linux-gnu-gcc
     ;;
     *)
     echo "Unsupported architecture: $ARCH"
