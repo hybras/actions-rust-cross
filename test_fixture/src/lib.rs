@@ -1,0 +1,1 @@
+pub const STR: &str = "Hello, world!";
