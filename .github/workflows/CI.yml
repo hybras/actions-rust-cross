@@ -29,7 +29,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup cross compilation
-        uses: .
+        uses: ./.
         id: cross
         with:
           rust_target: ${{ matrix.target }}
