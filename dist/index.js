@@ -28154,7 +28154,7 @@ class StringWritable {
   }
 }
 
-class StringWriter extends Writable {
+class StringWriter extends stream.Writable {
   constructor(options) {
     super(options);
     this.data = '';
