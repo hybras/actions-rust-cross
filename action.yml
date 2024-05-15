@@ -1,0 +1,11 @@
+name: Install Cross compilation prerequisites
+description: Install the prerequisites for cross compilation, where supported FOR LINUX ONLY and ONLY FOR ASCIIDOCTOR-SERVER
+
+inputs:
+  target:
+    description: 'The target triple for the cross compilation'
+    required: true
+
+runs:
+  using: "node20"
+  main: "index.js"
