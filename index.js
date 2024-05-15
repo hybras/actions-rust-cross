@@ -1,7 +1,10 @@
 const core = require('@actions/core'); const exec = require("@actions/exec");
+import { platform } from 'node:process';
+
 
 async function main() {
   try {
+    checkLinux();
     const target = core.getInput('rust_target');
     const target_props = validateTarget(target);
     let arch = getDebianArch(target_props);
@@ -14,6 +17,12 @@ async function main() {
 }
 
 main();
+
+function checkLinux() {
+  if (platform !== 'linux') {
+    throw new Error(`This action is only supported on Linux.`);
+  }
+}
 
 async function installDebArch(arch) {
   core.exportVariable('DEBIAN_FRONTEND', 'noninteractive');
