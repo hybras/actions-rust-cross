@@ -19,7 +19,7 @@ async function main() {
 main();
 
 function checkLinux() {
-  if (platform !== 'linux') {
+  if (process.platform !== 'linux') {
     throw new Error(`This action is only supported on Linux.`);
   }
 }
