@@ -1,0 +1,19 @@
+name: Install Cross compilation prerequisites
+description: Install the prerequisites for cross compilation, where supported FOR LINUX ONLY and ONLY FOR ASCIIDOCTOR-SERVER
+
+inputs:
+  target:
+    description: 'The target triple for the cross compilation'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - if: ${{ ( ! contains(inputs.target, '-unknown-linux-') ) || runner.os != 'Linux' }}
+      run: |
+        echo "Cross compilation is only supported for Linux targets."
+        exit 1
+      shell: bash
+    - name: Install cross compilation prerequisites
+      shell: bash
+      run: ./index.sh ${{ inputs.rust_target }}
