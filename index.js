@@ -1,5 +1,5 @@
 const core = require('@actions/core'); const exec = require("@actions/exec");
-import { platform } from 'node:process';
+const process = require('node:process');
 
 
 async function main() {
