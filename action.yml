@@ -9,7 +9,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - if: ${{ ( ! contains(inputs.target, '-unknown-linux-') ) || runner.os != 'Linux' }}
+    - if: ${{ ( ! contains(inputs.rust_target, '-unknown-linux-') ) || runner.os != 'Linux' }}
       run: |
         echo "Cross compilation is only supported for Linux targets."
         exit 1
