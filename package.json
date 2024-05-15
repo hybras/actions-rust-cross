@@ -1,0 +1,27 @@
+{
+  "name": "cross",
+  "version": "0.1.0",
+  "description": "Setup basic ubuntu (debian) cross compile support",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "ncc build index.js -o dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hybras/actions-rust-cross.git"
+  },
+  "author": "hybras",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hybras/actions-rust-cross/issues"
+  },
+  "homepage": "https://github.com/hybras/actions-rust-cross#readme",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/exec": "^1.0.0"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.33.4"
+  }
+}
