@@ -1,4 +1,4 @@
-name: Publish CI artifacts
+name: Test
 
 on:
   push:
