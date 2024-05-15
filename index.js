@@ -20,10 +20,25 @@ async function installDebArch(arch) {
   await exec.exec('sudo', ['apt-get', 'install', `crossbuild-essential-${arch}`]);
 }
 
-function validateTarget(target) {
+async function validateTarget(target) {
   if (!target.includes('-unknown-linux-')) {
     throw new Error(`Cross compilation is only supported for Linux targets and hosts.`);
   }
+
+  let targetsStr = ""
+  await exec.exec('rustc', ['--print', 'target-list'], {
+    listeners: {
+      stdout: (data) => {
+        targetsStr += data.toString();
+      }
+    }
+  });
+  let targets = new Set(targetsStr.split('\n'));
+
+  if (!targets.has(target)) {
+    throw new Error(`Not a rust target: ${target}`);
+  }
+
   const split = target.split('-');
   const arch = split[0];
   const other = split[3];
