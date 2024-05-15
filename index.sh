@@ -55,4 +55,3 @@ echo "::set-output name=linker::$LINKER"
 if [[ -n "$DEBUG" ]]; then
     sudo apt-get -y install crossbuild-essential-$PACKAGE_ARCH
 fi
-
