@@ -52,6 +52,6 @@ export DEBIAN_FRONTEND=noninteractive
 echo "::set-output name=package_arch::$PACKAGE_ARCH"
 echo "::set-output name=linker::$LINKER"
 # if not debug, run `sudo apt-get -y install crossbuild-essential-$PACKAGE_ARCH`
-if [[ -n "$DEBUG" ]]; then
+if [[ -z "$DEBUG" ]]; then
     sudo apt-get -y install crossbuild-essential-$PACKAGE_ARCH
 fi
