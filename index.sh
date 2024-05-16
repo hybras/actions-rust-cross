@@ -49,8 +49,8 @@ case $ARCH in
 esac
 export DEBIAN_FRONTEND=noninteractive
 # pass package arch to github output
-echo "::set-output name=package_arch::$PACKAGE_ARCH"
-echo "::set-output name=linker::$LINKER"
+echo "package_arch=$PACKAGE_ARCH" >> $GITHUB_OUTPUT
+echo "linker=$LINKER" >> $GITHUB_OUTPUT
 # if not debug, run `sudo apt-get -y install crossbuild-essential-$PACKAGE_ARCH`
 if [[ -z "$DEBUG" ]]; then
     sudo apt-get -y install crossbuild-essential-$PACKAGE_ARCH
