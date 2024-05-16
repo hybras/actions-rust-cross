@@ -41,6 +41,6 @@ jobs:
       - name: Build
         run: |
           cd test_fixture
-          cargo run --frozen --locked --offline --target=${{ matrix.target }}
+          cargo build --frozen --locked --offline --target=${{ matrix.target }}
         env:
           RUSTFLAGS: -C linker=${{ steps.cross.outputs.linker }}
