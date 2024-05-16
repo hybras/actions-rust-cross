@@ -40,7 +40,7 @@ jobs:
           targets: ${{ matrix.target }}
       - name: Build
         working-directory: test_fixture
-        if: ${{ ! startsWith(matrix.target, 'x86_64-' }}
+        if: ${{ ! startsWith(matrix.target, 'x86_64-') }}
         run: |
           cargo build --frozen --locked --offline --target=${{ matrix.target }}
         env:
