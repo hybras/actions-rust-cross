@@ -4,4 +4,35 @@ This action sets up cross compilation support for ubuntu.
 It installs the necessary packages.
 It is NOT sufficient for full blown package development.
 It only supports a handful of rust's most supported targets, with musl libc support thrown in for good measure.
-It does not set environment variables either (CC, LD, include, etc), so you will need to do that yourself.
+
+== Usage
+
+[source, yaml]
+----
+name: Cross compiling
+on: [push]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+    - run: cargo build --release --target ${{ matrix.target }}
+    - uses: hybras/cross-compile-action@v1
+      with:
+        rust_target: ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - aarch64-unknown-linux-gnu
+          - aarch64-unknown-linux-musl
+          - arm-unknown-linux-gnueabihf
+          - arm-unknown-linux-musleabihf
+          - i686-unknown-linux-musl
+          - i686-unknown-linux-gnu
+          - x86_64-unknown-linux-gnu
+          - x86_64-unknown-linux-musl
+----
