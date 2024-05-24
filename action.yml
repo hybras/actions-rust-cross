@@ -1,5 +1,5 @@
 name: Install Cross compilation prerequisites
-description: Install the prerequisites for cross compilation, where supported FOR LINUX ONLY and ONLY FOR ASCIIDOCTOR-SERVER
+description: Install the prerequisites for cross compilation, where supported FOR LINUX ONLY
 
 inputs:
   rust_target:
