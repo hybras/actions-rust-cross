@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -xeauo
-
 TARGET=$1
 ARCH=$(cut -d'-' -f1 <<< "$TARGET")
 OTHER=$(cut -d'-' -f4 <<< "$TARGET")
