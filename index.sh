@@ -50,4 +50,4 @@ if [[ -n "$CI" ]]; then
 fi
 
 mkdir -p ~/.cargo
-cat cargo_config.toml >> ~/.cargo/config
+cat cargo_config.toml >> ~/.cargo/config.toml
