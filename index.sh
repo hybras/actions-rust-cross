@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -xeauo
+
 TARGET=$1
 ARCH=$(cut -d'-' -f1 <<< "$TARGET")
 OTHER=$(cut -d'-' -f4 <<< "$TARGET")
@@ -18,11 +20,9 @@ case $ARCH in
     case $OTHER in
         gnueabihf | musleabihf)
         PACKAGE_ARCH="armhf"
-        LINKER=arm-linux-gnueabihf-gcc
         ;;
         gnueabi | musleabi)
         PACKAGE_ARCH="armel"
-        LINKER=arm-linux-gnueabi-gcc
         ;;
         *)
         echo "Unsupported architecture: $ARCH-$OTHER"
@@ -32,15 +32,12 @@ case $ARCH in
     ;;
     aarch64)
     PACKAGE_ARCH="arm64"
-    LINKER=aarch64-linux-gnu-gcc
     ;;
     x86_64)
     PACKAGE_ARCH="amd64"
-    LINKER=x86-64-linux-gnu-gcc
     ;;
     i686)
     PACKAGE_ARCH="i386"
-    LINKER=i686-linux-gnu-gcc
     ;;
     *)
     echo "Unsupported architecture: $ARCH"
@@ -50,8 +47,10 @@ esac
 export DEBIAN_FRONTEND=noninteractive
 # pass package arch to github output
 echo "package_arch=$PACKAGE_ARCH" >> $GITHUB_OUTPUT
-echo "linker=$LINKER" >> $GITHUB_OUTPUT
 # if not debug, run `sudo apt-get -y install crossbuild-essential-$PACKAGE_ARCH`
 if [[ -z "$DEBUG" ]]; then
     sudo apt-get -y install crossbuild-essential-$PACKAGE_ARCH
 fi
+
+mkdir -p ~/.cargo
+cat cargo_config.toml >> ~/.cargo/config

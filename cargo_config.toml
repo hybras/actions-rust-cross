@@ -1,0 +1,14 @@
+# x86_64 is the default arch and shouldn't need to be specified
+# [target.'cfg(target_arch = "x86_64")']
+# linker = "x86_64-linux-gnu-gcc"
+
+[target.'cfg(target_arch = "i686")']
+linker = "i686-linux-gnu-gcc"
+
+[target.'cfg(target_arch = "aarch64")']
+linker = "aarch64-linux-gnu-gcc"
+
+[target.'cfg(target_arch = "arm")']
+linker = "arm-linux-gnueabi-gcc"
+
+
