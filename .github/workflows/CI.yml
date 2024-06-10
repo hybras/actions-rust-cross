@@ -42,7 +42,7 @@ jobs:
         working-directory: test_fixture
         run: |
           cargo build --frozen --locked --offline --target=${{ matrix.target }}
-      - name: Build
+      - name: Sanity check
         working-directory: test_fixture
         if: startsWith(matrix.target, 'x86_64-')
         run: |
