@@ -5,6 +5,9 @@ on:
     tags: ['v*']
     branches:
       - "main"
+    paths-ignore:
+      - "README.adoc"
+      - "LICENSE"
   schedule:
     - cron: "18 3 3 2,5,8,11 *" # 3rd day of February, May, August, November at 3:18 UTC"
   pull_request:
