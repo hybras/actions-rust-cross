@@ -46,6 +46,6 @@ jobs:
           cargo build --frozen --locked --offline --target=${{ matrix.target }}
       - name: Sanity check
         working-directory: test_fixture
-        if: startsWith(matrix.target, 'x86_64-')
+        if: startsWith(matrix.target, 'x86_64-unknown-linux-')
         run: |
           cargo run --frozen --locked --offline --target=${{ matrix.target }}
