@@ -1,5 +1,7 @@
 = Cross compiling
 
+CAUTION: This is deprecated in favor of cargo-zigbuild
+
 This action sets up cross compilation support for ubuntu.
 It installs the necessary `crossbuild-essential` packages.
 It is NOT sufficient for full blown package development.
